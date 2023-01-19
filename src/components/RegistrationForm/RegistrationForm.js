@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {firebase} from '../../firebase';
 import ErrorLabel from '../ErrorLabel/ErrorLabel';
-import InputItem from '../InputItem/InputItem';
+import InputItem from './InputItem/InputItem';
 import './style.css';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
 
@@ -11,7 +11,6 @@ export default function RegistrationForm(){
     const [userName,setUserName] = useState(initialInputState);
     const [email,setEmail] = useState(initialInputState);
     const [password,setPassword] = useState(initialInputState);
-    const [phoneNumber,setPhoneNumber] = useState(initialInputState);
     const [confirmPassword,setConfirmPassword] = useState(initialInputState);
     const [passwordsMatch,setPasswordsMatch] = useState(false);
     const [errorText,setErrorText] = useState('');
@@ -25,10 +24,6 @@ export default function RegistrationForm(){
             case "email":
                 setEmail(value);
                 break;
-            case "phoneNumber":
-                setPhoneNumber(value);
-                checkForExistingPhoneNumber(value);
-                break;
             case "password":
                 setPassword(value);
                 validatePassword(value,confirmPassword);
@@ -41,10 +36,6 @@ export default function RegistrationForm(){
                 console.log(`No handler specified for input ${id}`);
         }
 
-    }
-
-    function checkForExistingPhoneNumber(phoneNumber_arg){
-        setErrorText('phone number checked')
     }
 
     //using passed-in args here because otherwise
@@ -76,35 +67,27 @@ export default function RegistrationForm(){
             return;
         }
         setUserName('');
-        setEmail('');
-        setPassword('');
-        setPhoneNumber('');
-        setConfirmPassword('');
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
     }
 
     return(
         <div className="form">
             <div className="form-body">
-                <InputItem 
+                {/*<InputItem 
                     inputName="userName"
                     labelText="Username"
                     type="text"
                     handleInputChange={handleInputChange}
                     value={userName}
-                />
+    />*/}
                 <InputItem
                     inputName="email"
                     labelText="Email"
                     type="text"
                     handleInputChange={handleInputChange}
                     value={email}
-                />
-                <InputItem 
-                    inputName="phoneNumber"
-                    labelText="Phone Number"
-                    type="text"
-                    handleInputChange={handleInputChange}
-                    value={phoneNumber}
                 />
                 <InputItem
                     inputName="password"
